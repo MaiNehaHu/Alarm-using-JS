@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Akaya+Telivigala&family=Bebas+Neue&family=Bungee&family=Bungee+Shade&family=Caesar+Dressing&family=Flavors&family=Hanalei+Fill&family=Kumar+One+Outline&family=Metal+Mania&family=Monoton&family=Passero+One&family=Plaster&family=Righteous&family=Rubik+80s+Fade&family=Rubik+Burned&family=Rubik+Marker+Hatch&family=Sedgwick+Ave+Display&family=Zilla+Slab+Highlight&display=swap"
+      rel="stylesheet"
+    />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Alarm</title>
+  </head>
+  <body>
+    <div class="container">
+      <!--1-->
+      <div class="current-time">
+        <span id="digit">$$ : $$ : $$</span> 
+        <span id="ampm"> ##</span>
+      </div>
+      <!--2-->
+      <div class="set-alarm">
+        <div class="set-hour">
+          <select class="input" id="hour">
+            <option value="Hour" selected hidden>Hour</option>
+          </select>
+        </div>
+        <div class="set-min">
+          <select class="input" id="min">
+            <option value="Minute" selected hidden>Minute</option>
+          </select>
+        </div>
+        <div class="set-ampm">
+          <select class="input" id="ampm">
+            <option value="AM/PM" selected hidden>AM/PM</option>
+          </select>
+        </div>
+      </div>
+      <!--3-->
+      <div id="set-button">
+        <button>Set Alarm</button>
+      </div>
+    </div>
+
+    <script src="./script.js"></script>
+  </body>
+</html>

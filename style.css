@@ -1,0 +1,133 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(to bottom, cornflowerblue, navy);
+}
+.container {
+  height: 60vh;
+  width: 50vw;
+  border-radius: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  background-color: white;
+}
+.current-time {
+  font-size: 70px;
+  font-weight: 800;
+  width: 80%;
+  word-break: break-all;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-evenly;
+  font-family: "Monoton", cursive;
+
+  background: linear-gradient(to bottom,#ff0000, #0051ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; 
+}
+
+.set-alarm {
+  width: 80%;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.input {
+  min-width: 100px;
+  max-width: 100px;
+  padding: 15px 10px 15px;
+  margin: 5px;
+  border-radius: 0.5rem;
+
+  font-size: medium;
+  border: 2px solid black;
+}
+#set-button {
+  width: 80%;
+}
+#set-button button {
+  cursor: pointer;
+  width: 100%;
+  font-size: large;
+  letter-spacing: 0.15em;
+  border-radius: 0.5rem;
+  border: 1px double transparent;
+  color: white;
+  background-color: blue;
+  font-family: "Bungee", cursive;
+  transition: all 0.5s;
+}
+#set-button button:hover {
+  color: blue;
+  background-color: white;
+  border: 1px double blue;
+}
+
+
+@media all and (max-width: 1160px) {
+  .current-time {
+    font-size: 60px;
+  }
+}
+@media all and (max-width: 1030px) {
+  .current-time {
+    font-size: 50px;
+  }
+}
+@media all and (max-width: 825px) {
+  .current-time {
+    font-size: 40px;
+  }
+  .input {
+    min-width: 80px;
+    max-width: 80px;
+    padding: 10px 5px 10px;
+    margin: 3px;
+    font-size: small;
+  }
+}
+@media all and (max-width: 660px) {
+  .current-time {
+    font-size: 35px;
+  }
+  .input {
+    min-width: 80px;
+    max-width: 80px;
+    padding: 5px 5px 5px;
+    margin: 3px;
+    font-size: small;
+  }
+  .container {
+    height: 40vh;
+    width: 55vw;
+  }
+}
+@media all and (max-width: 580px) {
+  .current-time {
+    font-size: 30px;
+  }
+}
+@media all and (max-width: 506px) {
+  #set-button button {
+    font-size: medium;
+  }
+}
+@media all and (max-width: 455px) {
+  .current-time {
+    font-size: 26px;
+  }
+}
