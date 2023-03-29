@@ -2,13 +2,11 @@ const selectMenu = document.querySelectorAll("select"); /**All select tags */
 let cuurentTime = document.getElementsByClassName("current-time");
 let setAlarmBtn = document.querySelector("button");
 
-
 const LOCAL_STORAGE_KEY = "Alarm";
 
 const getAlarms = () => {
   let alarmTime = localStorage.getItem("Alarm");
   /**With the help of keyname we are getting the alarm time */
-  console.log(alarmTime);
 
   if (alarmTime) {
     return JSON.parse(localStorage.getItem("Alarm"));
@@ -17,14 +15,28 @@ const getAlarms = () => {
      * but we are working with integers
      */
   } else {
-    return 0;
+    return [];
   }
 };
 
-let alarmTime = getAlarms();           
+let alarmTime = [];
+let localStorageAlarm = getAlarms();
+
+alarmTime = localStorageAlarm[0];
+if (localStorageAlarm[1] === undefined) {
+  setAlarmBtn.innerText = "Set Alarm";
+} else {
+  setAlarmBtn.innerText = localStorageAlarm[1];
+}
+let isAlarmSet;
+if (!isAlarmSet) {
+  isAlarmSet = localStorageAlarm[2];
+}
+//Alarm is not set initally
+
+console.log("LS " + alarmTime , isAlarmSet);
 //after page refresh it will take alarm from local storage
-let isAlarmSet = false;                
-//Alarm is not set initally 
+
 let ringtone = new Audio("./alarm.mp3");
 
 for (let i = 12; i > 0; i--) {
@@ -49,42 +61,60 @@ for (let i = 2; i > 0; i--) {
 setAlarmBtn.addEventListener("click", setAlarm);
 
 function setAlarm() {
-  if (isAlarmSet) {
-    //if alarm is set
-    alarmTime = "";      
-    //set alarm time to null
-    ringtone.pause();    
-    //and pause the ringtone
-    console.log("Alarm stoped ringing");
-    setAlarmBtn.innerText = "Set Alarm";
-    //Change text again to set alarm
+  const now = new Date();
+  let sec = now.getSeconds();
+  let Hourinput = selectMenu[0].value;
+  let Minuteinput =
+    sec < 59 ? parseInt(selectMenu[1].value) + 1 : selectMenu[1].value;
+  let Secinput = selectMenu[2].value;
 
-    //local storage will get cleared
-    localStorage.clear()
-    return (isAlarmSet = false);
+  let time = `${Hourinput}:${Minuteinput} ${Secinput}`;
+
+  if (isAlarmSet) {
+    if (
+      time.includes("Hour") ||
+      time.includes("Minute") ||
+      time.includes("AM/PM") ||
+      setAlarmBtn.innerText.includes("Stop")
+    ) {
+      //if alarm is set
+      alarmTime = "";
+      //set alarm time to null
+      ringtone.pause();
+      //and pause the ringtone
+      console.log("Alarm stoped");
+      setAlarmBtn.innerText = "Set Alarm";
+      //Change text again to set alarm
+
+      //local storage will get cleared
+      localStorage.clear();
+
+      return (isAlarmSet = false);
+    }
   }
 
-  let time = `${selectMenu[0].value}:${selectMenu[1].value} ${selectMenu[2].value}`;
-  alarmTime = time; 
+  alarmTime = time;
   //values are taken
-  isAlarmSet = true; 
+  isAlarmSet = true;
   //set alarm to true after getting time from user input
 
-  //setting item to local storage
-  localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(alarmTime));
-
-  console.log(time);
+  console.log("input " + time , isAlarmSet);
   //if nothing is selected and Set Alarm Button is clicked.Show alert
   if (
     time.includes("Hour") ||
     time.includes("Minute") ||
-    time.includes("AM?PM")
+    time.includes("AM/PM")
   ) {
     return alert("Please select valid time");
   }
 
   setAlarmBtn.innerText = "Stop";
   //change text to Stop
+
+  //setting item to local storage
+  let LOCAL_STORAGE_ARRAY = [alarmTime, setAlarmBtn.innerText, isAlarmSet];
+  localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(LOCAL_STORAGE_ARRAY));
+
   return alarmTime;
 }
 
@@ -113,9 +143,9 @@ function setDate() {
   if (alarmTime == `${hour}:${min} ${label}`) {
     //if alam time and current time are same
     console.log("Alarm ringing...");
-    ringtone.play(); 
+    ringtone.play();
     //play the song
-    ringtone.loop = true; 
+    ringtone.loop = true;
     //repeat until button is clicked
   }
 }
