@@ -19,7 +19,7 @@ const getAlarms = () => {
   }
 };
 
-let alarmTime = [];
+let alarmTime;
 let localStorageAlarm = getAlarms();
 
 alarmTime = localStorageAlarm[0];
@@ -34,7 +34,7 @@ if (!isAlarmSet) {
 }
 //Alarm is not set initally
 
-console.log("LS " + alarmTime , isAlarmSet);
+console.log("LS " + alarmTime, setAlarmBtn.innerText, isAlarmSet);
 //after page refresh it will take alarm from local storage
 
 let ringtone = new Audio("./alarm.mp3");
@@ -62,15 +62,19 @@ setAlarmBtn.addEventListener("click", setAlarm);
 
 function setAlarm() {
   const now = new Date();
+  let Min = now.getMinutes();
   let sec = now.getSeconds();
   let Hourinput = selectMenu[0].value;
-  let Minuteinput =
-    sec < 59 ? parseInt(selectMenu[1].value) + 1 : selectMenu[1].value;
+  let Minuteinput = parseInt(selectMenu[1].value);
+  Minuteinput = Min > Minuteinput ? Minuteinput : Minuteinput+1 ;
+  Minuteinput = Min < Minuteinput ? Minuteinput - 1 : Minuteinput;
+  Minuteinput = Min == Minuteinput ? alert("Can't set alarm for now") : Minuteinput;
   let Secinput = selectMenu[2].value;
 
   let time = `${Hourinput}:${Minuteinput} ${Secinput}`;
 
   if (isAlarmSet) {
+    console.log("input " + time, isAlarmSet);
     if (
       time.includes("Hour") ||
       time.includes("Minute") ||
@@ -98,7 +102,6 @@ function setAlarm() {
   isAlarmSet = true;
   //set alarm to true after getting time from user input
 
-  console.log("input " + time , isAlarmSet);
   //if nothing is selected and Set Alarm Button is clicked.Show alert
   if (
     time.includes("Hour") ||
@@ -142,7 +145,7 @@ function setDate() {
 
   if (alarmTime == `${hour}:${min} ${label}`) {
     //if alam time and current time are same
-    console.log("Alarm ringing...");
+    console.log("Alarm ringing...", alarmTime);
     ringtone.play();
     //play the song
     ringtone.loop = true;
