@@ -3,7 +3,7 @@ let cuurentTime = document.getElementsByClassName("current-time");
 let setAlarmBtn = document.querySelector("button");
 const dialogTime = document.getElementById("dialog-time");
 const modal = document.getElementById("notification");
-
+let ringtone = new Audio("./alarm.mp3");
 const LOCAL_STORAGE_KEY = "Alarm";
 
 const getAlarms = () => {
@@ -45,7 +45,6 @@ if (localStorageAlarm[0] === undefined) {
 console.log("LS " + alarmTime, setAlarmBtn.innerText, isAlarmSet);
 //after page refresh it will take alarm from local storage
 
-let ringtone = new Audio("./alarm.mp3");
 
 for (let i = 12; i > 0; i--) {
   i = i < 10 ? "0" + i : i;
@@ -85,6 +84,7 @@ function setAlarm() {
 
   let time = `${Hourinput}:${Minuteinput}:${Secinput} ${AMPM}`;
 
+  console.log("Alarm set at ",time);
   if (isAlarmSet) {
     if (
       selectMenu[0].value.includes("Hour") ||
@@ -97,7 +97,7 @@ function setAlarm() {
       //set alarm time to null
       ringtone.pause();
       //and pause the ringtone
-      console.log("Alarm stoped");
+
       setAlarmBtn.innerText = "Set Alarm";
       //Change text again to set alarm
 
@@ -118,15 +118,13 @@ function setAlarm() {
       return alert("Removed Alarm");
     }
 
-    console.log("Alarm stoped.", alarmTime, setAlarmBtn.innerText, isAlarmSet);
+    console.log("Alarm stoped.");
   }
 
   alarmTime = time;
   //values are taken
   isAlarmSet = true;
   //set alarm to true after getting time from user input
-
-  console.log("Oncilck :", time, setAlarmBtn.innerText, isAlarmSet);
 
   //dialog tag
   if (
