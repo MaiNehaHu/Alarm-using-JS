@@ -63,18 +63,22 @@ setAlarmBtn.addEventListener("click", setAlarm);
 function setAlarm() {
   const now = new Date();
   let Min = now.getMinutes();
-  let sec = now.getSeconds();
-  let Hourinput = selectMenu[0].value;
+ 
+  let Hourinput = parseInt(selectMenu[0].value);
   let Minuteinput = parseInt(selectMenu[1].value);
-  Minuteinput = Min > Minuteinput ? Minuteinput : Minuteinput+1 ;
-  Minuteinput = Min < Minuteinput ? Minuteinput - 1 : Minuteinput;
-  Minuteinput = Min == Minuteinput ? alert("Can't set alarm for now") : Minuteinput;
-  let Secinput = selectMenu[2].value;
+  Minuteinput = (Min > Minuteinput) ? Minuteinput : Minuteinput+1 ;
+  Minuteinput = (Min < Minuteinput) ? Minuteinput - 1 : Minuteinput;
+  Secinput = (Min == Minuteinput) ? 00 : 0;
+  let AMPM = selectMenu[2].value;
+  
+  Hourinput = Hourinput < 10 ? `0${Hourinput}` : Hourinput;
+  Minuteinput = Minuteinput < 10 ? `0${Minuteinput}` : Minuteinput;
+  Secinput = Secinput < 10 ? `0${Secinput}` : Secinput;
 
-  let time = `${Hourinput}:${Minuteinput} ${Secinput}`;
+  let time = `${Hourinput}:${Minuteinput}:${Secinput} ${AMPM}`;
 
   if (isAlarmSet) {
-    console.log("input " + time, isAlarmSet);
+    console.log("removed. isAlarmSet=", !isAlarmSet);
     if (
       time.includes("Hour") ||
       time.includes("Minute") ||
@@ -101,6 +105,8 @@ function setAlarm() {
   //values are taken
   isAlarmSet = true;
   //set alarm to true after getting time from user input
+
+  console.log("input " + time, isAlarmSet);
 
   //if nothing is selected and Set Alarm Button is clicked.Show alert
   if (
@@ -143,7 +149,7 @@ function setDate() {
   let ampm = document.getElementById("ampm");
   ampm.innerHTML = ` ${label}`;
 
-  if (alarmTime == `${hour}:${min} ${label}`) {
+  if (alarmTime == `${hour}:${min}:${sec} ${label}`) {
     //if alam time and current time are same
     console.log("Alarm ringing...", alarmTime);
     ringtone.play();
