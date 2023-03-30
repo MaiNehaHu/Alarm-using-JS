@@ -1,6 +1,8 @@
 const selectMenu = document.querySelectorAll("select"); /**All select tags */
 let cuurentTime = document.getElementsByClassName("current-time");
 let setAlarmBtn = document.querySelector("button");
+const dialogTime = document.getElementById("dialog-time");
+const modal = document.getElementById("notification");
 
 const LOCAL_STORAGE_KEY = "Alarm";
 
@@ -20,16 +22,22 @@ const getAlarms = () => {
 };
 
 let alarmTime;
-let localStorageAlarm = getAlarms();
+let isAlarmSet;
 
-alarmTime = localStorageAlarm[0];
+let localStorageAlarm = getAlarms();
+if (localStorageAlarm[0] === undefined) {
+  alarmTime = "Hour:Minute AM/PM";
+} else {
+  alarmTime = localStorageAlarm[0];
+}
 if (localStorageAlarm[1] === undefined) {
   setAlarmBtn.innerText = "Set Alarm";
 } else {
   setAlarmBtn.innerText = localStorageAlarm[1];
 }
-let isAlarmSet;
-if (!isAlarmSet) {
+if (localStorageAlarm[0] === undefined) {
+  isAlarmSet = false;
+} else {
   isAlarmSet = localStorageAlarm[2];
 }
 //Alarm is not set initally
@@ -63,14 +71,14 @@ setAlarmBtn.addEventListener("click", setAlarm);
 function setAlarm() {
   const now = new Date();
   let Min = now.getMinutes();
- 
+
   let Hourinput = parseInt(selectMenu[0].value);
   let Minuteinput = parseInt(selectMenu[1].value);
-  Minuteinput = (Min > Minuteinput) ? Minuteinput : Minuteinput+1 ;
-  Minuteinput = (Min < Minuteinput) ? Minuteinput - 1 : Minuteinput;
-  Secinput = (Min == Minuteinput) ? 00 : 0;
+  Minuteinput = Min > Minuteinput ? Minuteinput : Minuteinput + 1;
+  Minuteinput = Min < Minuteinput ? Minuteinput - 1 : Minuteinput;
+  Secinput = Min == Minuteinput ? 00 : 0;
   let AMPM = selectMenu[2].value;
-  
+
   Hourinput = Hourinput < 10 ? `0${Hourinput}` : Hourinput;
   Minuteinput = Minuteinput < 10 ? `0${Minuteinput}` : Minuteinput;
   Secinput = Secinput < 10 ? `0${Secinput}` : Secinput;
@@ -78,11 +86,10 @@ function setAlarm() {
   let time = `${Hourinput}:${Minuteinput}:${Secinput} ${AMPM}`;
 
   if (isAlarmSet) {
-    console.log("removed. isAlarmSet=", !isAlarmSet);
     if (
-      time.includes("Hour") ||
-      time.includes("Minute") ||
-      time.includes("AM/PM") ||
+      selectMenu[0].value.includes("Hour") ||
+      selectMenu[1].value.includes("Minute") ||
+      selectMenu[2].value.includes("AM/PM") ||
       setAlarmBtn.innerText.includes("Stop")
     ) {
       //if alarm is set
@@ -96,9 +103,22 @@ function setAlarm() {
 
       //local storage will get cleared
       localStorage.clear();
-
-      return (isAlarmSet = false);
+      isAlarmSet = false;
     }
+    selectMenu[0].value = "Hour";
+    selectMenu[1].value = "Minute";
+    selectMenu[2].value = "AM/PM";
+
+    //if nothing is selected and Set Alarm Button is clicked.Show alert
+    if (
+      time.includes("Hour") ||
+      time.includes("Minute") ||
+      (time.includes("AM/PM") && setAlarmBtn.innerText.includes("Set"))
+    ) {
+      return alert("Removed Alarm");
+    }
+
+    console.log("Alarm stoped.", alarmTime, setAlarmBtn.innerText, isAlarmSet);
   }
 
   alarmTime = time;
@@ -106,15 +126,28 @@ function setAlarm() {
   isAlarmSet = true;
   //set alarm to true after getting time from user input
 
-  console.log("input " + time, isAlarmSet);
+  console.log("Oncilck :", time, setAlarmBtn.innerText, isAlarmSet);
 
+  //dialog tag
+  if (
+    isAlarmSet &&
+    !selectMenu[0].value.includes("Hour") &&
+    !selectMenu[1].value.includes("Minute") &&
+    !selectMenu[2].value.includes("AM/PM") &&
+    setAlarmBtn.innerText.includes("Set")
+  ) {
+    modal.showModal();
+    setTimeout(() => {
+      modal.close();
+    }, 3000);
+  }
   //if nothing is selected and Set Alarm Button is clicked.Show alert
   if (
     time.includes("Hour") ||
     time.includes("Minute") ||
-    time.includes("AM/PM")
+    (time.includes("AM/PM") && setAlarmBtn.innerText.includes("Set"))
   ) {
-    return alert("Please select valid time");
+    return alert("Set Proper Time!!!");
   }
 
   setAlarmBtn.innerText = "Stop";
@@ -149,15 +182,18 @@ function setDate() {
   let ampm = document.getElementById("ampm");
   ampm.innerHTML = ` ${label}`;
 
+  const icon = document.createElement("span");
+  icon.innerHTML = `🔊`;
   if (alarmTime == `${hour}:${min}:${sec} ${label}`) {
-    //if alam time and current time are same
+    //if alarm time and current time are same
     console.log("Alarm ringing...", alarmTime);
     ringtone.play();
     //play the song
     ringtone.loop = true;
     //repeat until button is clicked
+    setAlarmBtn.appendChild(icon);
   }
 }
 
-setInterval(setDate, 500);
+setInterval(setDate, 1000);
 //calling this to update the current time

@@ -65,6 +65,7 @@ body {
   cursor: pointer;
   width: 100%;
   font-size: large;
+  padding: 5px 0 5px;
   letter-spacing: 0.15em;
   border-radius: 0.5rem;
   border: 1px double transparent;
@@ -73,20 +74,35 @@ body {
   font-family: "Bungee", cursive;
   transition: all 0.5s;
 }
-#set-button button:hover,#set-button button:focus {
+#set-button button:hover {
   color: blue;
   background-color: white;
   border: 1px double blue;
 }
+/*Model */
+#notification{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  padding: 15px;
+  background-color: crimson;
+  border-radius: 1rem;
+  box-shadow: 10px 10px 10px black;
+}
+#notification::backdrop{
+  backdrop-filter: blur(10px);
+  background: linear-gradient(to left bottom, rgba(255, 0, 0, 0.2), rgba(0, 0, 255, 0.2));
+}
 
-@media all and (max-width: 1160px) {
+@media all and (max-width: 1180px) {
   .current-time {
-    font-size: 60px;
+    font-size: 65px;
   }
 }
 @media all and (max-width: 1030px) {
   .current-time {
-    font-size: 50px;
+    font-size: 48px;
   }
 }
 @media all and (max-width: 825px) {
@@ -100,7 +116,7 @@ body {
 }
 @media all and (max-width: 765px) {
   .current-time {
-    font-size: 42px;
+    font-size: 39px;
   }
 }
 @media all and (max-width: 660px) {
