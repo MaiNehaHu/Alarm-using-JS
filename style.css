@@ -102,7 +102,7 @@ body {
 }
 @media all and (max-width: 1030px) {
   .current-time {
-    font-size: 48px;
+    font-size: 47px;
   }
 }
 @media all and (max-width: 825px) {

@@ -45,7 +45,6 @@ if (localStorageAlarm[0] === undefined) {
 console.log("LS " + alarmTime, setAlarmBtn.innerText, isAlarmSet);
 //after page refresh it will take alarm from local storage
 
-
 for (let i = 12; i > 0; i--) {
   i = i < 10 ? "0" + i : i;
   let option = `<option value="${i}">${i}</option>`;
@@ -84,37 +83,32 @@ function setAlarm() {
 
   let time = `${Hourinput}:${Minuteinput}:${Secinput} ${AMPM}`;
 
-  console.log("Alarm set at ",time);
-  if (isAlarmSet) {
-    if (
-      selectMenu[0].value.includes("Hour") ||
-      selectMenu[1].value.includes("Minute") ||
-      selectMenu[2].value.includes("AM/PM") ||
-      setAlarmBtn.innerText.includes("Stop")
-    ) {
-      //if alarm is set
-      alarmTime = "";
-      //set alarm time to null
-      ringtone.pause();
-      //and pause the ringtone
+  console.log("Alarm set at ", time);
+  if (
+    (isAlarmSet && selectMenu[0].value.includes("Hour")) ||
+    selectMenu[1].value.includes("Minute") ||
+    selectMenu[2].value.includes("AM/PM") ||
+    setAlarmBtn.innerText.includes("Stop")
+  ) {
+    //if alarm is set
+    alarmTime = "";
+    //set alarm time to null
+    ringtone.pause();
+    //and pause the ringtone
 
-      setAlarmBtn.innerText = "Set Alarm";
-      //Change text again to set alarm
+    setAlarmBtn.innerText = "Set Alarm";
+    //Change text again to set alarm
 
-      //local storage will get cleared
-      localStorage.clear();
-      isAlarmSet = false;
-    }
+    //local storage will get cleared
+    localStorage.clear();
+    isAlarmSet = false;
+
     selectMenu[0].value = "Hour";
     selectMenu[1].value = "Minute";
     selectMenu[2].value = "AM/PM";
 
     //if nothing is selected and Set Alarm Button is clicked.Show alert
-    if (
-      time.includes("Hour") ||
-      time.includes("Minute") ||
-      (time.includes("AM/PM") && setAlarmBtn.innerText.includes("Set"))
-    ) {
+    if (setAlarmBtn.innerText.includes("Set")) {
       return alert("Removed Alarm");
     }
 
