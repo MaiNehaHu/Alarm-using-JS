@@ -10,7 +10,6 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(to bottom, cornflowerblue, navy);
 }
 .container {
   height: 60vh;
@@ -93,6 +92,23 @@ body {
 #notification::backdrop{
   backdrop-filter: blur(10px);
   background: linear-gradient(to left bottom, rgba(255, 0, 0, 0.2), rgba(0, 0, 255, 0.2));
+}
+
+.day-background{
+  background:url("https://wallpaperset.com/w/full/3/a/7/191137.jpg");
+}
+.dark-background{
+  background: url("https://t4.ftcdn.net/jpg/05/21/74/45/360_F_521744549_EIpXcj84wsoBPj65tlqBleEGR3bzdKrO.jpg");
+}
+.evening-background{
+  background: url("https://media.istockphoto.com/id/1157477211/photo/blur-tropical-sand-beach-with-sunset-sky-and-cloud-background-copy-space-of-summer-vacation.jpg?s=170667a&w=0&k=20&c=-4ZLY8AWU3orjHuBY5vJtOd1-D1cIP8t2Pv47ECn8Bg=");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.morning-background{
+  background: url("https://www.slidebackground.com/uploads/good-morning/new-day-sunrise-good-afternoon-morning-background.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 @media all and (max-width: 1180px) {

@@ -1,9 +1,13 @@
+let body = document.querySelector("body");
 const selectMenu = document.querySelectorAll("select"); /**All select tags */
 let cuurentTime = document.getElementsByClassName("current-time");
 let setAlarmBtn = document.querySelector("button");
+
 const dialogTime = document.getElementById("dialog-time");
 const modal = document.getElementById("notification");
+
 let ringtone = new Audio("./alarm.mp3");
+
 const LOCAL_STORAGE_KEY = "Alarm";
 
 const getAlarms = () => {
@@ -173,6 +177,31 @@ function setDate() {
 
   let ampm = document.getElementById("ampm");
   ampm.innerHTML = ` ${label}`;
+
+  if (
+    (hour >= 7 && hour < 12 && label == "AM") ||
+    (hour == 12 && label == "PM") ||
+    (hour >= 1 && hour < 4 && label == "PM")
+  ) {
+    body.classList.add("day-background");
+    console.log("Day-background");
+  }
+  else if (hour >= 4 && hour <7 && label == "PM") {
+    body.classList.add("evening-background");
+    console.log("Evening-background");
+  } 
+  else if (
+    (hour >= 7 && hour < 12 && label == "PM") ||
+    (hour == 12 && label == "AM") ||
+    (hour >= 1 && hour < 4 && label == "AM")
+  ) {
+    body.classList.add("dark-background");
+    console.log("Dark-background");
+  }
+  else if (hour >= 4 && hour <7 && label == "AM") {
+    body.classList.add("morning-background");
+    console.log("Morning-background");
+  } 
 
   const icon = document.createElement("span");
   icon.innerHTML = `🔊`;
