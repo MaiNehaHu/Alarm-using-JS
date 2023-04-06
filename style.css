@@ -14,14 +14,16 @@ body {
 .container {
   height: 60vh;
   width: 50vw;
-  border-radius: 0.5rem;
+  border-radius: 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
-  background-color: white;
+
   position: relative;
   top: -50px;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 0 10px 5px rgb(60, 60, 60);
 }
 .current-time {
   font-size: 70px;
